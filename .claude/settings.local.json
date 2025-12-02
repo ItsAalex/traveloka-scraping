@@ -6,7 +6,15 @@
       "Bash(dir:*)",
       "Bash(test:*)",
       "Bash(tasklist:*)",
-      "Bash(taskkill:*)"
+      "Bash(taskkill:*)",
+      "Bash(where:*)",
+      "Bash(\".venv/Scripts/python.exe\" app.py)",
+      "Bash(\".venv/Scripts/python.exe\" scraper_with_selenium.py)",
+      "Bash(python scraper_with_selenium.py:*)",
+      "Bash(.venv/Scripts/python.exe:*)",
+      "Bash(timeout 1 .venv/Scripts/python.exe:*)",
+      "Bash(scraper_output.log)",
+      "Bash(.venv/Scripts/pip.exe install:*)"
     ],
     "deny": [],
     "ask": []

@@ -23,7 +23,7 @@ import uuid
 
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
@@ -234,61 +234,69 @@ class TravelokaScraper:
             Dictionary containing the complete request payload
         """
 
+        # Build the contexts object with hotel detail URL and identifiers
+        hotel_detail_url = f"https://www.traveloka.com/en-th/hotel/detail?spec={params.check_in_date['day']}-{params.check_in_date['month']}-{params.check_in_date['year']}.{params.check_out_date['day']}-{params.check_out_date['month']}-{params.check_out_date['year']}.{params.num_rooms}.{params.num_adults}.HOTEL.{params.hotel_id}"
+
         if contexts is None:
             contexts = {
-                "searchContext": "",
-                "sortContext": "",
-                "filterContext": "",
-                "pricingContext": ""
+                "hotelDetailURL": hotel_detail_url,
+                "bookingId": None,
+                "sourceIdentifier": "HOTEL_DETAIL",
+                "shouldDisplayAllRooms": False,
+                "marketingContextCapsule": {
+                    "amplitude_session_id": int(datetime.now().timestamp() * 1000),
+                    "ga_session_id": str(int(datetime.now().timestamp())),
+                    "ga_client_id": "613465115.1764514738",
+                    "amplitude_device_id": "F1Up8i860MRVqAZjCanqM5",
+                    "fb_browser_id_fbp": "fb.1.1764514737732.977017059618964463",
+                    "timestamp": str(int(datetime.now().timestamp() * 1000)),
+                    "page_full_url": hotel_detail_url,
+                    "client_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+                }
             }
 
         payload = {
-            "clientInterface": "desktop",
-            "tid": str(uuid.uuid4()),
             "fields": [],
             "data": {
                 "contexts": contexts,
                 "prevSearchId": prev_search_id,
                 "numInfants": params.num_infants,
-                "labelContext": {},
+                "ccGuaranteeOptions": {
+                    "ccInfoPreferences": ["CC_TOKEN", "CC_FULL_INFO"],
+                    "ccGuaranteeRequirementOptions": ["CC_GUARANTEE"]
+                },
+                "rateTypes": ["PAY_NOW", "PAY_AT_PROPERTY"],
+                "isJustLogin": False,
+                "isReschedule": False,
+                "preview": False,
                 "monitoringSpec": {
                     "referrer": "",
                     "lastKeyword": ""
                 },
-                "hotelDetailURL": f"https://www.traveloka.com/en-th/hotel/detail?spec={params.check_in_date['day']}-{params.check_in_date['month']}-{params.check_in_date['year']}.{params.check_out_date['day']}-{params.check_out_date['month']}-{params.check_out_date['year']}.{params.num_rooms}.{params.num_adults}.HOTEL.{params.hotel_id}",
-                "marketingContextCapsule": {
-                    "amplitude_device_id": "F1Up8i860MRVqAZjCanqM5",
-                    "amplitude_session_id": int(datetime.now().timestamp() * 1000),
-                    "client_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
-                    "fb_browser_id_fbp": "fb.1.1764514737732.977017059618964463",
-                    "ga_client_id": "613465115.1764514738",
-                    "ga_session_id": f"s{int(datetime.now().timestamp())}$o1$g0$t{int(datetime.now().timestamp())}$j1$l0$h1",
-                    "page_full_url": f"https://www.traveloka.com/en-th/hotel/detail?spec={params.check_in_date['day']}-{params.check_in_date['month']}-{params.check_in_date['year']}.{params.check_out_date['day']}-{params.check_out_date['month']}-{params.check_out_date['year']}.{params.num_rooms}.{params.num_adults}.HOTEL.{params.hotel_id}",
-                    "timestamp": str(int(datetime.now().timestamp() * 1000))
+                "hotelId": params.hotel_id,
+                "currency": params.currency,
+                "labelContext": {},
+                "isExtraBedIncluded": True,
+                "hasPromoLabel": False,
+                "supportedRoomHighlightTypes": ["ROOM"],
+                "checkInDate": {
+                    "day": params.check_in_date["day"],
+                    "month": params.check_in_date["month"],
+                    "year": params.check_in_date["year"]
                 },
-                "shouldDisplayAllRooms": False,
-                "sourceIdentifier": "HOTEL_DETAIL"
+                "checkOutDate": {
+                    "day": params.check_out_date["day"],
+                    "month": params.check_out_date["month"],
+                    "year": params.check_out_date["year"]
+                },
+                "numOfNights": self._calculate_nights(params.check_in_date, params.check_out_date),
+                "numAdults": params.num_adults,
+                "numRooms": params.num_rooms,
+                "numChildren": params.num_children,
+                "childAges": params.child_ages,
+                "tid": str(uuid.uuid4())
             },
-            "ccGuaranteeOptions": {
-                "ccInfoPreferences": ["CC_TOKEN", "CC_FULL_INFO"],
-                "ccGuaranteeRequirementOptions": ["CC_GUARANTEE"]
-            },
-            "checkInDate": params.check_in_date,
-            "checkOutDate": params.check_out_date,
-            "childAges": params.child_ages,
-            "currency": params.currency,
-            "hasPromoLabel": False,
-            "hotelId": params.hotel_id,
-            "isExtraBedIncluded": True,
-            "isJustLogin": False,
-            "isReschedule": False,
-            "numAdults": params.num_adults,
-            "numChildren": params.num_children,
-            "numOfNights": self._calculate_nights(params.check_in_date, params.check_out_date),
-            "numRooms": params.num_rooms,
-            "preview": False,
-            "rateTypes": ["PAY_NOW", "PAY_AT_PROPERTY"],
-            "supportedRoomHighlightTypes": ["ROOM"]
+            "clientInterface": "desktop"
         }
 
         return payload
@@ -308,12 +316,13 @@ class TravelokaScraper:
         )
         return (check_out_date - check_in_date).days
 
-    def _make_request(self, payload: Dict) -> Optional[Dict]:
+    def _make_request(self, payload: Dict, hotel_detail_url: str = None) -> Optional[Dict]:
         """
         Make API request with retry logic and proxy error handling
 
         Args:
             payload: Request payload
+            hotel_detail_url: URL of the hotel detail page (for Referer header)
 
         Returns:
             Response JSON or None if request fails
@@ -329,7 +338,12 @@ class TravelokaScraper:
                 logger.info(f"Cookies being sent: {cookie_keys}")
                 logger.info(f"WAF token present: {has_waf_token}")
                 logger.debug(f"Request endpoint: {TravelokaConfig.ROOMS_API_ENDPOINT}")
-                logger.debug(f"Request payload: {json.dumps(payload, default=str)[:200]}...")
+                logger.info(f"Full request payload:\n{json.dumps(payload, indent=2, default=str)}")
+
+                # Update Referer header to point to hotel detail page if provided
+                if hotel_detail_url:
+                    self.session.headers["Referer"] = hotel_detail_url
+                    logger.debug(f"Set Referer header to: {hotel_detail_url}")
 
                 response = self.session.post(
                     TravelokaConfig.ROOMS_API_ENDPOINT,
@@ -341,11 +355,15 @@ class TravelokaScraper:
 
                 if response.status_code in [200, 202]:
                     logger.info("Request successful")
+                    logger.debug(f"Response status: {response.status_code}")
+                    logger.debug(f"Response length: {len(response.text)} bytes")
+                    logger.debug(f"Response preview: {response.text[:200]}")
                     try:
                         return response.json()
-                    except:
+                    except Exception as e:
                         # 202 with empty response is acceptable, return empty data
-                        logger.info("Response received (202 with empty body)")
+                        logger.warning(f"Could not parse JSON response: {str(e)}")
+                        logger.warning(f"Raw response text: {response.text}")
                         return {"success": True}
                 elif response.status_code == 429:
                     logger.warning("Rate limited (429). Waiting before retry...")
@@ -555,9 +573,27 @@ class TravelokaScraper:
         """
         logger.info(f"Starting scrape for hotel ID: {params.hotel_id}")
 
+        # Build hotel detail URL for Referer header
+        hotel_detail_url = f"https://www.traveloka.com/en-th/hotel/detail?spec={params.check_in_date['day']}-{params.check_in_date['month']}-{params.check_in_date['year']}.{params.check_out_date['day']}-{params.check_out_date['month']}-{params.check_out_date['year']}.{params.num_rooms}.{params.num_adults}.HOTEL.{params.hotel_id}"
+        if hotel_name:
+            # Add hotel name with proper URL encoding
+            hotel_detail_url += f".{hotel_name.replace(' ', '%20')}"
+
+        # Fetch hotel detail page first to get fresh session cookies
+        logger.info(f"Fetching hotel detail page to get fresh session cookies...")
+        try:
+            response = self.session.get(
+                hotel_detail_url,
+                timeout=TravelokaConfig.TIMEOUT
+            )
+            logger.info(f"Hotel detail page fetched (status: {response.status_code})")
+            # Cookies from this response are automatically stored in self.session.cookies
+        except Exception as e:
+            logger.warning(f"Failed to fetch hotel detail page: {str(e)}")
+
         # Build and send request
         payload = self._build_request_payload(params)
-        response_data = self._make_request(payload)
+        response_data = self._make_request(payload, hotel_detail_url)
 
         if not response_data:
             logger.error("Failed to retrieve data from API")
@@ -690,9 +726,9 @@ def main():
         # Define search parameters
         # IMPORTANT: Update these with actual values from your search
         search_params = SearchParams(
-            hotel_id="9000001153383",  # Example: Novotel Hua Hin
-            check_in_date={"day": "15", "month": "12", "year": "2025"},
-            check_out_date={"day": "16", "month": "12", "year": "2025"},
+            hotel_id="9000001153383",  # Radisson Resort & Spa Hua Hin
+            check_in_date={"day": "16", "month": "12", "year": "2025"},
+            check_out_date={"day": "17", "month": "12", "year": "2025"},
             num_adults=2,
             num_children=0,
             num_rooms=1,
@@ -700,7 +736,7 @@ def main():
         )
 
         # Perform scrape
-        result = scraper.scrape(search_params, hotel_name="Novotel Hua Hin Cha-Am Beach Resort")
+        result = scraper.scrape(search_params, hotel_name="Radisson Resort & Spa Hua Hin")
 
         # Validate result
         if TravelokaDataValidator.validate_result(result):

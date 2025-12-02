@@ -39,7 +39,7 @@ Other useful cookies:
 # Copy & paste your aws-waf-token value here
 # Found in: DevTools → Application → Cookies → aws-waf-token
 # This is the KEY token that proves you solved reCAPTCHA
-AWS_WAF_TOKEN = "7a32e8e9-74b9-48a6-86e7-99c1395b7ee7:DgoApS58H65bAAAA:5YFfwjLo9ehrn2R6De5hqY7KSK7S1T0QiOjtUB51qxpZtIbB3ppJH4b3skn8EOL2Dg9/wHvtQ6FhTOIH8OQxNZUZNj7mWVLiGoliaLs2m+51ieP4FsqSJODRRXhSwqD6465CZ+cDfJR1WJvMgUnZTsmLW7Zk8eIxoiba9JhPMg/RcEBRqYEdevybhlC59HlgKsvNu4GSIumSNsFSE/+CxZVLUd2/S8GM4ZEhCjMZZD8p5xdZGv0NYJ2Tr8nxnt/3"
+AWS_WAF_TOKEN = "7a32e8e9-74b9-48a6-86e7-99c1395b7ee7:DgoAnPVeKO9gAAAA:xOhdKj5WMaU987D4TDqngLd5/mPxs2mMBCz1CXsb8dtZpZg4kHnA83yzx/77V6sxWFwcerGdbluXUcLT7Cm41pXbudAvVY1D/d9dDdNKZzG3tzzrI1ZO/1UMQwk4hp400ZwWab6LZV/5BdRKayA5deOuCmD2txwWQ1kaKSABrw173Xw2xlHnii0Iq0kVEwZythl1fvfXN5QXxJ0TZErAf7IGfo/k/clNjQLIlqveEpS38of2HynnT+eYNPRqCm7Q"
 
 # ==============================================================================
 # ADDITIONAL SESSION COOKIES (OPTIONAL)
@@ -70,35 +70,49 @@ OTHER_COOKIES = {
     "g_state": "{\"i_l\":0,\"i_ll\":1764514740049,\"i_b\":\"jOjDS3NMqIkwYCE6/QcX+tQ/zkKTMcEDD3bMLzKtMyM\"}",
     "_cs_ex": "1760605804",
     "_cs_c": "1",
-    "__lt__sid": "7f3a1c07-1febe622",
-    "ABTastySession": "mrasn",
-    "amp_f4354c": "YxB5e3J0GgEKMclNsBBDIH...1jbddhq0t.1jbdejmu8.0.c.c",
-    "_gat_UA-29776811-12": "1",
-    "wcs_bt": "s_2cb982ada97c:1764609351",
-    "cto_bundle": "pFVapV9jekZPRGVZOExiZ3Z6MGpVeFNoY1dkRWFna3cwMXR2RnllUUk0djhuZk1tNjlrcE5tTlUwVk93a3ElMkZRWDJCREJ2THh3T1dENU9jTVlvOWxNTzlka3Z2WmxxaXRKQmE4YSUyQlRMY1Awa2xkajZ3eU5TUG5ra25qMCUyRjBERVkzVTlrRURXNkp1YkNQY1B1TTNzY1ZXWFRTMnJCelF4N3ZwQSUyRndIRElMcFpJVnkxUzlzVzR6NnhmN2xMQXRwMjIlMkZxQ21yV0F4RjU0NHdmMyUyQlRET3BlT3hUSURRJTNEJTNE",
-    "ttcsid_CFNI0BRC77UEUGLEG00G": "1764608241882::vZsjF2jGQ0dDtFEZnz0S.9.1764609352827.0",
-    "datadome": "y0LW6Elpa3tK7LLumrUYtSFBahtr4y1tyUlY6YCFwaIg~KaC2D0aC40R06qEbK7gwIe2g5LpYiABkhePU25TIPnTfF_3zY5WYbQTrZ8xZNDrNJUZpYcfaXBCM7XZI6~M",
+    "__lt__sid": "7f3a1c07-d489bfb3",
+    "ABTastySession": "mrasn=",
+    "amp_f4354c": "YxB5e3J0GgEKMclNsBBDIH...1jbfjaqot.1jbfkdea6.0.e.e",
+    "wcs_bt": "s_2cb982ada97c:1764682545",
+    "cto_bundle": "9dIr4V9jekZPRGVZOExiZ3Z6MGpVeFNoY1dkQ1NETG5kJTJGUlFrcGlaMllZZThPSFZxU3F0bkxnRWJaN081UyUyQkhLNHZZdGx2MVYxJTJCU1BSWjVqRlIxdHNlWWxtT3lqTG1lY1hBRFhqeFRxOU9KMTA3VkYyQUpjbXg3REoySDh4VEo4cTVpNnF6dXJsajUzMTFPWnhrNkt0V3ZXbFZ0T0FjM1IlMkY1RmMxZllRR0pEeVpydnFseUFwRVRaWTRDN2t6OFNnTGhWbERTQ3dEZG9yOU92TllNV3I5MDk1bkElM0QlM0Q",
+    "ttcsid_CFNI0BRC77UEUGLEG00G": "1764681414469::NEzdGfo-ISU7c5bXPVCp.11.1764682546691.0",
     "_ga": "GA1.2.613465115.1764514738",
-    "_ga_RSRSMMBH0X": "GS2.1.s1764608237$o8$g1$t1764609365$j44$l0$h1862309198",
-    "amp_1a5adb": "F1Up8i860MRVqAZjCanqM5...1jbddhq0r.1jbdek55m.3b.c.3n",
-    "ttcsid": "1764608241883::epn06dm-UHbYrppJ3JfT.8.1764609366498.0",
-    "ttcsid_CUM82PBC77U4QKJNCRL0": "1764608253561::aD11DUb16jgt3EYGtUxC.8.1764609366498.0",
-    "_dd_s": "rum",
+    "amp_1a5adb": "F1Up8i860MRVqAZjCanqM5...1jbfjaqoq.1jbfkdn2u.4a.e.4o",
+    "tvl": "qgdHX7GvehrD9XH5a3S4PUiOJGezXQ9yizVaSxTklwrLYY64AE4apiD1qmHRGaV8gGAQoV6xR5wi1hxtboYegx0JoHbuxL9J5IDMykh7yrn/kmgjvZe3CXlrOt5A94G1h8SGYm0D03zEW7S7g02l9zkAPbkMGQ6AJj+0Bs51j2eJWUUfSgVRqwTDzqipwQI3E8EyIH757Gns+WXTKiHMrEx7DTtkiW3DQvacQnC2TS4BDfxM5AKaL3BV57FQcr/POUY2cWxVPMm8jroO7mWZapq7tP+4mnWc++fDDUD1I5HM0WMA1zSky7I1/5su3gOq8drebnubrSsQUrxquO4VJsT1DY9mAfBGKhL9GRyCUkztC0Qrpfc93mzd8ISGj5NLxbVWc9mUJC6U6r8wkx04c+4CDTx/jJt5ZXoEQTwGFtnKf2gOTYlhb3NCvgFLiPdcxUWvlqKv28eDb2BLCyAyqaqzoBRDz8OG9o8/qkIA122LlqaxXKLAXtO4VBqVI8t42ndIFKV80oqyu2hQkwt5DqBxSdMMGI1wRQokx15o4WE=",
+    "tvs": "qgdHX7GvehrD9XH5a3S4PXWKx93/3Xi103f/kPpnhg2VIjp9ir9QAw31NZn2tzJWK/7HSCLbeZ7zv3hxjygOHAJXNKBpJJKziyI1t67KAUQXAClo4NtmN8RDLD50g7akd+gyQzq70AhHhvg65it3EHJ8QJVLDxjwhIbxYg4fKH9bPZBZuDO5H0NNMHQUyz3U1N+0NjAmWhSTtggf9gIHJIaLKSmYGn4epBOkel7pAXzTEEzXgYvUndksxp0RyTokrIgf3gMDGaFdmm79302k4n2QmXE3eQLSvgvRCmmDT3u3NsKhJDtFI1afSbeKadSyXEw2bImmv0C+7A4wSqGznc3wWdOLlzemGQX5jLyfTly7DOej8j0JYXTE/QQBsRQ0dTCOy40pa1AdOWQtNkVOQIvVNfTzlW7ZEM7TsTU0hwz/US3d/Ykd4EWqO2p/tmmLsupfQDFWfHfzzgDFNDYr0M0FrsT6G0XUR6seEe8Ej8Wnw1YOnGV8kt4JC4QoMk74iDroN4P3WbnpgVh8UITypc82T/q88N1401dh6iGcoTodyhX99FtThxxbL49q+hSd",
+    "tvo": "L2FwaS92MS90dmxrL2V2ZW50cw==",
+    "ttcsid": "1764681414469::9OSc_IdPWmRD2_Adls7n.10.1764682555754.0",
+    "ttcsid_CUM82PBC77U4QKJNCRL0": "1764681463295::W43uaqEB2Foe7gNSUhAP.10.1764682555755.0",
+    "_ga_RSRSMMBH0X": "GS2.1.s1764681413$o10$g1$t1764682610$j60$l0$h1949565001",
+    "datadome": "YdkfHhfvWCWwtHrgpq8e706ufEyNxXoegJRzNgjS~z8Rf09cmtKtM1sKMBn7W~k4WXHW9eSN_OZl7A7E0SrHlDDONhI__5NrOyKnH7cDwmWuigACB1LcJYfC69LHnB9j",
+    "_dd_s": "rum=0&expire=1764683511219&logs=1&id=af6af201-8617-4f28-85dd-da8b92ed049e&created=1764681411120",
 }
 
 BROWSER_HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
-    "Accept": "application/json, text/plain, */*",
-    "Accept-Language": "en-US",
+    "Accept": "*/*",
+    "Accept-Language": "en-US,en;q=0.9,sr;q=0.8",
     "Accept-Encoding": "gzip, deflate, br",
     "Content-Type": "application/json",
     "Origin": "https://www.traveloka.com",
-    "Referer": "https://www.traveloka.com/",
+    "Priority": "u=1, i",
+    "Sec-CH-UA": "\"Chromium\";v=\"142\", \"Google Chrome\";v=\"142\", \"Not_A Brand\";v=\"99\"",
+    "Sec-CH-UA-Mobile": "?0",
+    "Sec-CH-UA-Platform": "\"Windows\"",
     "Sec-Fetch-Dest": "empty",
     "Sec-Fetch-Mode": "cors",
     "Sec-Fetch-Site": "same-origin",
     "Cache-Control": "no-cache",
-    "Pragma": "no-cache"
+    "Pragma": "no-cache",
+    "T-A-V": "262393",
+    "TV-Country": "TH",
+    "TV-Currency": "THB",
+    "TV-Language": "en_TH",
+    "WWW-App-Version": "release_webacd_20251127-402408096b",
+    "X-Client-Interface": "desktop",
+    "X-DID": "MDFLQkFNQ0FLMkNCOEVKVkVIRDVRODJFU0g=",
+    "X-Domain": "accomRoom",
+    "X-Route-Prefix": "en-th"
 }
 
 # ==============================================================================
