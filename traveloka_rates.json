@@ -1,0 +1,22 @@
+{
+  "success": true,
+  "hotel_id": "9000001153383",
+  "hotel_name": "Novotel Hua Hin Cha-Am Beach Resort",
+  "check_in": {
+    "day": "15",
+    "month": "12",
+    "year": "2025"
+  },
+  "check_out": {
+    "day": "16",
+    "month": "12",
+    "year": "2025"
+  },
+  "num_adults": 2,
+  "num_children": 0,
+  "num_rooms": 1,
+  "currency": "THB",
+  "deep_link": "https://www.traveloka.com/en/hotel/search?hotelId=9000001153383&checkIn=20251215&checkOut=20251216&room=1&adult=2&child=0&currency=THB",
+  "timestamp": "2025-12-02T14:21:50.835044",
+  "rates": []
+}
