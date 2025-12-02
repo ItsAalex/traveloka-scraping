@@ -15,10 +15,10 @@
   "num_children": 0,
   "num_rooms": 1,
   "currency": "THB",
-  "timestamp": "2025-12-02T17:40:35.835703",
+  "timestamp": "2025-12-02T19:04:06.875272",
   "rates": [
     {
-      "room_name": "Superior Oceanview",
+      "room_name": "Superior Oceanview", 
       "rate_name": "Without Breakfast",
       "number_of_guests": "1",
       "cancellation_policy": "This reservation is non-refundable.",
@@ -108,5 +108,5 @@
       "total_price_per_stay": 365705
     }
   ],
-  "deep_link": "https://www.traveloka.com/en/hotel/search?hotelId=9000001153383&checkIn=16122025&checkOut=17122025&room=1&adult=1&child=0&currency=THB"
+  "deep_link": "https://www.traveloka.com/en-th/hotel/detail?spec=20-02-2025.21-02-2025.1.1.HOTEL.9000001153383.novotel%20hua%20hin%20cha-am%20beach%20resort%20&%20spa.2"
 }
