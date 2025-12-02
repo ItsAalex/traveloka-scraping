@@ -1,0 +1,112 @@
+{
+  "success": true,
+  "hotel_name": "novotel hua hin cha-am beach resort & spa",
+  "check_in": {
+    "day": "16",
+    "month": "12",
+    "year": "2025"
+  },
+  "check_out": {
+    "day": "17",
+    "month": "12",
+    "year": "2025"
+  },
+  "num_adults": 1,
+  "num_children": 0,
+  "num_rooms": 1,
+  "currency": "THB",
+  "timestamp": "2025-12-02T19:04:06.875272",
+  "rates": [
+    {
+      "room_name": "Superior Oceanview", 
+      "rate_name": "Without Breakfast",
+      "number_of_guests": "1",
+      "cancellation_policy": "This reservation is non-refundable.",
+      "breakfast": "Not Included",
+      "price": 254656,
+      "currency": "THB",
+      "total_taxes": 45075,
+      "total_price": 299731,
+      "original_price": 399641,
+      "net_price_per_stay": 254656,
+      "shown_price_per_stay": 254656,
+      "total_price_per_stay": 299731
+    },
+    {
+      "room_name": "Superior Oceanview",
+      "rate_name": "Breakfast for 1",
+      "number_of_guests": "1",
+      "cancellation_policy": "This reservation is non-refundable.",
+      "breakfast": "Breakfast for 1",
+      "price": 288288,
+      "currency": "THB",
+      "total_taxes": 51027,
+      "total_price": 339315,
+      "original_price": 452420,
+      "net_price_per_stay": 288288,
+      "shown_price_per_stay": 288288,
+      "total_price_per_stay": 339315
+    },
+    {
+      "room_name": "Premier Oceanview",
+      "rate_name": "Without Breakfast",
+      "number_of_guests": "1",
+      "cancellation_policy": "This reservation is non-refundable.",
+      "breakfast": "Not Included",
+      "price": 277078,
+      "currency": "THB",
+      "total_taxes": 49043,
+      "total_price": 326121,
+      "original_price": 434828,
+      "net_price_per_stay": 277078,
+      "shown_price_per_stay": 277078,
+      "total_price_per_stay": 326121
+    },
+    {
+      "room_name": "Premier Oceanview",
+      "rate_name": "Breakfast for 1",
+      "number_of_guests": "1",
+      "cancellation_policy": "This reservation is non-refundable.",
+      "breakfast": "Breakfast for 1",
+      "price": 299525,
+      "currency": "THB",
+      "total_taxes": 53017,
+      "total_price": 352542,
+      "original_price": 470056,
+      "net_price_per_stay": 299525,
+      "shown_price_per_stay": 299525,
+      "total_price_per_stay": 352542
+    },
+    {
+      "room_name": "Deluxe Oceanview",
+      "rate_name": "Without Breakfast",
+      "number_of_guests": "1",
+      "cancellation_policy": "This reservation is non-refundable.",
+      "breakfast": "Not Included",
+      "price": 288288,
+      "currency": "THB",
+      "total_taxes": 51027,
+      "total_price": 339315,
+      "original_price": 452420,
+      "net_price_per_stay": 288288,
+      "shown_price_per_stay": 288288,
+      "total_price_per_stay": 339315
+    },
+    {
+      "room_name": "Deluxe Oceanview",
+      "rate_name": "Breakfast for 1",
+      "number_of_guests": "1",
+      "cancellation_policy": "This reservation is non-refundable.",
+      "breakfast": "Breakfast for 1",
+      "price": 310709,
+      "currency": "THB",
+      "total_taxes": 54996,
+      "total_price": 365705,
+      "original_price": 487607,
+      "net_price_per_stay": 310709,
+      "shown_price_per_stay": 310709,
+      "total_price_per_stay": 365705
+    }
+  ],
+  "deep_link": "https://www.traveloka.com/en-th/hotel/detail?spec=20-02-2025.21-02-2025.1.1.HOTEL.9000001153383.novotel%20hua%20hin%20cha-am%20beach%20resort%20&%20spa.2"
+}
