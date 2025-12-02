@@ -145,8 +145,6 @@ class TravelokaScraperWithSelenium:
             self.driver.get(hotel_detail_url)
 
             # IMPORTANT: Traveloka requires user to solve reCAPTCHA
-            # Just wait a simple fixed time - don't check page state as it can cause crashes
-            # Shorter wait times seem to be more stable
             logger.info("Waiting 20 seconds for initial page load...")
             time.sleep(20)
 
@@ -161,9 +159,6 @@ class TravelokaScraperWithSelenium:
     def extract_cookies_from_browser(self) -> Dict:
         """
         Extract all cookies from the Chrome session
-
-        IMPORTANT: These are cookies issued by Traveloka IN THIS CHROME SESSION
-        NOT copied from somewhere else
         """
         cookies = {}
 
@@ -171,7 +166,6 @@ class TravelokaScraperWithSelenium:
 
         try:
             # Get all cookies from Chrome using Selenium API
-            # Don't wrap this in try/except to fail fast if there's a problem
             for cookie in self.driver.get_cookies():
                 cookies[cookie['name']] = cookie['value']
 
@@ -190,12 +184,6 @@ class TravelokaScraperWithSelenium:
     def update_session_with_browser_cookies(self, cookies: Dict):
         """
         Update requests.Session with cookies from real Chrome session
-
-        This is the MAGIC:
-        - Cookies are fresh (just issued)
-        - Cookies are from REAL session (not copied)
-        - Cookies are tied to your IP (same machine)
-        - API will accept them ✓
         """
         self.session.cookies.update(cookies)
         logger.info("requests.Session updated with browser cookies")
@@ -464,8 +452,7 @@ class TravelokaScraperWithSelenium:
         except Exception as e:
             logger.warning(f"Could not capture page source: {str(e)}")
 
-        # Step 3: Extract cookies from Chrome session IMMEDIATELY after page loads
-        # NOTE: The browser seems to crash if we wait too long, so extract quickly
+        # Step 3: Extract cookies from Chrome session
         logger.info("Extracting cookies immediately to avoid browser instability...")
         cookies = self.extract_cookies_from_browser()
         if cookies:
@@ -530,7 +517,7 @@ def main():
             logger.error("Failed to setup browser")
             return
 
-        # Define search parameters - using dates that we know work (Dec 16-17, 2025)
+        # Define search parameters
         search_params = SearchParams(
             hotel_id="9000001153383",
             check_in_date={"day": "16", "month": "12", "year": "2025"},
@@ -541,7 +528,7 @@ def main():
             currency="THB"
         )
 
-        # Perform scrape (use hotel name from your URL)
+        # Perform scrape
         result = scraper.scrape(search_params, hotel_name="novotel hua hin cha-am beach resort & spa")
 
         # Save results
