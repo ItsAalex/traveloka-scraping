@@ -14,7 +14,12 @@
       "Bash(.venv/Scripts/python.exe:*)",
       "Bash(timeout 1 .venv/Scripts/python.exe:*)",
       "Bash(scraper_output.log)",
-      "Bash(.venv/Scripts/pip.exe install:*)"
+      "Bash(.venv/Scripts/pip.exe install:*)",
+      "Bash(timeout 180 .venv\\Scripts\\python.exe:*)",
+      "Bash(timeout 180 .\\.venv\\Scripts\\python.exe:*)",
+      "Bash(timeout 180 python:*)",
+      "Bash(timeout 180 \".venv/Scripts/python.exe\":*)",
+      "Bash(ping:*)"
     ],
     "deny": [],
     "ask": []

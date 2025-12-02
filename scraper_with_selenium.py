@@ -311,13 +311,20 @@ class TravelokaScraperWithSelenium:
                 logger.info("Response is gzip-encoded, requests should handle it...")
 
             # Try different decoding approaches
-            logger.info(f"Response text preview (first 100 chars): {response.text[:100]}")
+            logger.info(f"Response text preview (first 500 chars): {response.text[:500]}")
 
             if response.status_code in [200, 202]:
                 try:
                     # Try to parse as JSON
                     data = response.json()
                     logger.info(f"Successfully parsed JSON response")
+                    logger.info(f"Response data keys: {data.keys() if isinstance(data, dict) else 'Not a dict'}")
+
+                    # Save raw response for inspection
+                    with open("api_response_raw.json", "w", encoding="utf-8") as f:
+                        json.dump(data, f, indent=2, ensure_ascii=False)
+                    logger.info("Raw API response saved to api_response_raw.json")
+
                     return data
                 except Exception as e:
                     logger.warning(f"Failed to parse JSON: {str(e)}")
@@ -344,7 +351,7 @@ class TravelokaScraperWithSelenium:
             return None
 
     def _extract_rates(self, response_data: Dict) -> List[Dict]:
-        """Extract room rates from API response"""
+        """Extract room rates from API response - matches task requirements exactly"""
         try:
             if not response_data:
                 return []
@@ -355,7 +362,7 @@ class TravelokaScraperWithSelenium:
 
             for room in recommended_entries:
                 room_name = room.get("name", "Unknown Room")
-                room_size = room.get("hotelRoomSizeDisplay", {}).get("value", "N/A")
+                max_occupancy = room.get("maxOccupancy", room.get("baseOccupancy", "2"))
 
                 # Each room has multiple inventory options (different rates/breakfast combos)
                 inventory_list = room.get("hotelRoomInventoryList", [])
@@ -378,35 +385,40 @@ class TravelokaScraperWithSelenium:
                         breakfast_display = meal_plan.get("displayMealPlanIncluded", "")
                         is_breakfast_included = inventory.get("isBreakfastIncluded", False)
 
-                        # Calculate prices
-                        total_price = int(total_fare.get("amount", 0))
-                        base_price = int(base_fare.get("amount", 0))
-                        taxes_amount = total_price - base_price
+                        # Calculate prices (per night)
+                        total_price_per_night = int(total_fare.get("amount", 0))
+                        net_price_per_night = int(base_fare.get("amount", 0))
+                        total_taxes = total_price_per_night - net_price_per_night
                         original_price = int(original_total.get("amount", 0))
+                        currency = total_fare.get("currency", "THB")
 
-                        normalized = {
+                        # Determine if there's a discount
+                        has_discount = original_price > 0 and original_price != total_price_per_night
+
+                        # Build rate object matching exact requirements
+                        rate = {
                             "room_name": room_name,
                             "rate_name": inventory.get("roomInventoryGroupOption", "Standard"),
-                            "shown_currency": total_fare.get("currency", "THB"),
-                            "shown_price": {
-                                "rate_name": breakfast_display if is_breakfast_included else "No Breakfast"
-                            },
-                            "net_price": base_price,
+                            "number_of_guests": str(max_occupancy),
                             "cancellation_policy": cancellation_label,
                             "breakfast": breakfast_display if is_breakfast_included else "Not Included",
-                            "number_of_guests": "2",  # From the API response
-                            "taxes_amount": taxes_amount,
-                            "total_price": total_price,
-                            "original_price": original_price,
-                            "shown_price_per_stay": f"{base_price}",
-                            "net_price_per_stay": f"{base_price}",
-                            "total_price_per_stay": f"{total_price}",
-                            "refundable": inventory.get("isRefundable", False),
-                            "num_rooms_left": int(inventory.get("numRemainingRooms", 0)),
-                            "room_size": room_size,
-                            "rate_type": inventory.get("rateType", "PAY_NOW"),
+                            "price": net_price_per_night if has_discount else total_price_per_night,
+                            "currency": currency,
+                            "total_taxes": total_taxes,
+                            "total_price": total_price_per_night,
                         }
-                        rates.append(normalized)
+
+                        # Add original price if discounted
+                        if has_discount:
+                            rate["original_price"] = original_price
+
+                        # Per night breakdown (as required)
+                        rate["net_price_per_stay"] = net_price_per_night
+                        rate["shown_price_per_stay"] = net_price_per_night
+                        rate["total_price_per_stay"] = total_price_per_night
+
+                        rates.append(rate)
+
                     except Exception as item_e:
                         logger.warning(f"Error parsing inventory item: {str(item_e)}")
                         continue
@@ -442,16 +454,37 @@ class TravelokaScraperWithSelenium:
             logger.error("Failed to handle reCAPTCHA")
             return {"success": False, "error": "Failed to handle reCAPTCHA"}
 
-        # Step 2: Extract cookies from Chrome session IMMEDIATELY after page loads
+        # Step 2: Extract page HTML to inspect what's actually rendered
+        logger.info("Capturing page HTML for inspection...")
+        try:
+            page_source = self.driver.page_source
+            with open("page_source.html", "w", encoding="utf-8") as f:
+                f.write(page_source)
+            logger.info(f"Page HTML saved to page_source.html (length: {len(page_source)})")
+        except Exception as e:
+            logger.warning(f"Could not capture page source: {str(e)}")
+
+        # Step 3: Extract cookies from Chrome session IMMEDIATELY after page loads
         # NOTE: The browser seems to crash if we wait too long, so extract quickly
         logger.info("Extracting cookies immediately to avoid browser instability...")
         cookies = self.extract_cookies_from_browser()
-        if not cookies:
-            logger.error("No cookies extracted from browser")
-            return {"success": False, "error": "No cookies extracted"}
-
-        # Step 3: Update requests.Session with these cookies
-        self.update_session_with_browser_cookies(cookies)
+        if cookies:
+            logger.info(f"Extracted {len(cookies)} cookies from browser")
+            # Step 4: Update requests.Session with these cookies
+            self.update_session_with_browser_cookies(cookies)
+        else:
+            logger.warning("No cookies extracted from browser - continuing with existing session")
+            # Try to use cookies from session_config as fallback
+            try:
+                from session_config import get_session_cookies
+                fallback_cookies = get_session_cookies()
+                if fallback_cookies:
+                    logger.info(f"Using {len(fallback_cookies)} cookies from session_config as fallback")
+                    self.update_session_with_browser_cookies(fallback_cookies)
+                else:
+                    logger.warning("No fallback cookies available")
+            except Exception as e:
+                logger.warning(f"Could not load fallback cookies: {str(e)}")
 
         # Step 4: Build and send API request
         payload = self._build_request_payload(params)
@@ -497,11 +530,11 @@ def main():
             logger.error("Failed to setup browser")
             return
 
-        # Define search parameters (from your correct URL)
+        # Define search parameters - using dates that we know work (Dec 16-17, 2025)
         search_params = SearchParams(
             hotel_id="9000001153383",
-            check_in_date={"day": "20", "month": "02", "year": "2025"},
-            check_out_date={"day": "21", "month": "02", "year": "2025"},
+            check_in_date={"day": "16", "month": "12", "year": "2025"},
+            check_out_date={"day": "17", "month": "12", "year": "2025"},
             num_adults=1,
             num_children=0,
             num_rooms=1,
