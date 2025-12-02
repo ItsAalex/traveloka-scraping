@@ -1,60 +1,23 @@
 """
 Session Configuration
 =====================
-
-This file contains all the session/authentication data you need to paste
-from your browser. Just copy & paste the values here from DevTools.
-
-HOW TO GET YOUR SESSION DATA:
-=============================
-
-1. Open Chrome with your VPN (Urban VPN)
-2. Go to https://www.traveloka.com
-3. Solve the reCAPTCHA when prompted
-4. Press F12 (open DevTools)
-5. Click "Application" tab (or "Storage" in Firefox)
-6. Left sidebar → "Cookies" → "https://www.traveloka.com"
-7. Find the cookies listed below and copy their values
-8. Paste them here
-
-WHAT COOKIES TO LOOK FOR:
-=========================
-
-aws-waf-token:
-  - The main authentication token
-  - Long string (150+ characters)
-  - Looks like: "326937dd-5b99-4e79-a8ea-ca127f0789c3:EQoAji1jqVqxAAAA:..."
-  - THIS IS THE MOST IMPORTANT ONE
-
-Other useful cookies:
-  - traveloka_session: Session identifier
-  - any other cookies with "traveloka" in the name
-
 """
 
 # ==============================================================================
 # PRIMARY AUTHENTICATION - AWS WAF TOKEN (MOST IMPORTANT!)
 # ==============================================================================
 
-# Copy & paste your aws-waf-token value here
-# Found in: DevTools → Application → Cookies → aws-waf-token
-# This is the KEY token that proves you solved reCAPTCHA
 AWS_WAF_TOKEN = "7a32e8e9-74b9-48a6-86e7-99c1395b7ee7:DgoAnPVeKO9gAAAA:xOhdKj5WMaU987D4TDqngLd5/mPxs2mMBCz1CXsb8dtZpZg4kHnA83yzx/77V6sxWFwcerGdbluXUcLT7Cm41pXbudAvVY1D/d9dDdNKZzG3tzzrI1ZO/1UMQwk4hp400ZwWab6LZV/5BdRKayA5deOuCmD2txwWQ1kaKSABrw173Xw2xlHnii0Iq0kVEwZythl1fvfXN5QXxJ0TZErAf7IGfo/k/clNjQLIlqveEpS38of2HynnT+eYNPRqCm7Q"
 
 # ==============================================================================
 # ADDITIONAL SESSION COOKIES (OPTIONAL)
 # ==============================================================================
-
-# Copy & paste other Traveloka cookies here if needed
-# You can find these in the same location: DevTools → Cookies
-
-# Example: Traveloka session cookie (if present)
-TRAVELOKA_SESSION = ""  # e.g., "abc123def456xyz789"
+TRAVELOKA_SESSION = ""
 
 # Example: Any other authentication cookies
 OTHER_COOKIES = {
-    "currentCountry": "RS",  # CRITICAL - Your country code
-    "selectedCurrency": "RSD",  # CRITICAL - Your currency
+    "currentCountry": "RS",
+    "selectedCurrency": "RSD",
     "tv-repeat-visit": "true",
     "countryCode": "RS",
     "_gcl_au": "1.1.821755296.1764514738",
