@@ -25,6 +25,5 @@ api_response_raw.json
 .DS_Store
 Thumbs.db
 
-# Output files (optional - uncomment if you want to ignore output)
 # traveloka_rates.json
-# page_source.html
+page_source.html
