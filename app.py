@@ -361,6 +361,7 @@ class TravelokaScraperWithSelenium:
                         rate_display = inventory.get("rateDisplay", {})
                         total_fare = rate_display.get("totalFare", {})
                         base_fare = rate_display.get("baseFare", {})
+                        taxes = rate_display.get("taxes", {})
                         original_rate = inventory.get("originalRateDisplay", {})
                         original_total = original_rate.get("totalFare", {})
 
@@ -376,7 +377,7 @@ class TravelokaScraperWithSelenium:
                         # Calculate prices (per night)
                         total_price_per_night = int(total_fare.get("amount", 0))
                         net_price_per_night = int(base_fare.get("amount", 0))
-                        total_taxes = total_price_per_night - net_price_per_night
+                        taxes_amount = int(taxes.get("amount", 0))
                         original_price = int(original_total.get("amount", 0))
                         currency = total_fare.get("currency", "THB")
 
@@ -386,14 +387,14 @@ class TravelokaScraperWithSelenium:
                         # Build rate object matching exact requirements
                         rate = {
                             "room_name": room_name,
-                            "rate_name": inventory.get("roomInventoryGroupOption", "Standard"),
-                            "number_of_guests": str(max_occupancy),
-                            "cancellation_policy": cancellation_label,
-                            "breakfast": breakfast_display if is_breakfast_included else "Not Included",
-                            "price": net_price_per_night if has_discount else total_price_per_night,
-                            "currency": currency,
-                            "total_taxes": total_taxes,
-                            "total_price": total_price_per_night,
+                            "rate_name": inventory.get("roomInventoryGroupOption", "Standard"), 
+                            "number_of_guests": str(max_occupancy), 
+                            "cancellation_policy": cancellation_label, 
+                            "breakfast": breakfast_display if is_breakfast_included else "Not Included", 
+                            "price": net_price_per_night if has_discount else total_price_per_night, 
+                            "shown_currency": currency, 
+                            "taxes_amount": taxes_amount, 
+                            "total_price": total_price_per_night, 
                         }
 
                         # Add original price if discounted
@@ -481,6 +482,10 @@ class TravelokaScraperWithSelenium:
         rates = self._extract_rates(response_data) if response_data else []
 
         # Step 6: Assemble result
+        from urllib.parse import quote
+        hotel_name_encoded = quote(hotel_name)
+        deep_link = f"https://www.traveloka.com/en-th/hotel/detail?spec={params.check_in_date['day']}-{params.check_in_date['month']}-{params.check_in_date['year']}.{params.check_out_date['day']}-{params.check_out_date['month']}-{params.check_out_date['year']}.{params.num_rooms}.{params.num_adults}.HOTEL.{params.hotel_id}.{hotel_name_encoded}.{params.num_children}"
+
         result = {
             "success": True,
             "hotel_name": hotel_name,
@@ -492,7 +497,7 @@ class TravelokaScraperWithSelenium:
             "currency": params.currency,
             "timestamp": datetime.now().isoformat(),
             "rates": rates,
-            "deep_link": f"https://www.traveloka.com/en/hotel/search?hotelId={params.hotel_id}&checkIn={params.check_in_date['day']}{params.check_in_date['month']}{params.check_in_date['year']}&checkOut={params.check_out_date['day']}{params.check_out_date['month']}{params.check_out_date['year']}&room={params.num_rooms}&adult={params.num_adults}&child={params.num_children}&currency={params.currency}"
+            "deep_link": deep_link
         }
 
         logger.info(f"Scrape completed. Found {len(rates)} rates")
@@ -520,8 +525,8 @@ def main():
         # Define search parameters
         search_params = SearchParams(
             hotel_id="9000001153383",
-            check_in_date={"day": "16", "month": "12", "year": "2025"},
-            check_out_date={"day": "17", "month": "12", "year": "2025"},
+            check_in_date={"day": "17", "month": "12", "year": "2025"},
+            check_out_date={"day": "18", "month": "12", "year": "2025"},
             num_adults=2,
             num_children=0,
             num_rooms=1,
