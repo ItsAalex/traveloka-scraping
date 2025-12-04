@@ -443,16 +443,6 @@ class TravelokaScraperWithSelenium:
             logger.error("Failed to handle reCAPTCHA")
             return {"success": False, "error": "Failed to handle reCAPTCHA"}
 
-        # Step 2: Extract page HTML to inspect what's actually rendered
-        logger.info("Capturing page HTML for inspection...")
-        try:
-            page_source = self.driver.page_source
-            with open("page_source.html", "w", encoding="utf-8") as f:
-                f.write(page_source)
-            logger.info(f"Page HTML saved to page_source.html (length: {len(page_source)})")
-        except Exception as e:
-            logger.warning(f"Could not capture page source: {str(e)}")
-
         # Step 3: Extract cookies from Chrome session
         logger.info("Extracting cookies immediately to avoid browser instability...")
         cookies = self.extract_cookies_from_browser()
