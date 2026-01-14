@@ -88,8 +88,7 @@ The scraper extracts comprehensive room information including rates, cancellatio
 
 1. **Clone the repository:**
    ```bash
-   git clone <repository-url>
-   cd traveloka-scraping
+   git clone https://github.com/ItsAalex/traveloka-scraping.git
    ```
 
 2. **Create a virtual environment:**
